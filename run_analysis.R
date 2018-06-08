@@ -1,7 +1,7 @@
-#install.packages(c("tidyr", "dplyr"))
-#library(tidyr)
+# install.packages("dplyr") # The analysis uses the dplyr package from the tidyverse
 library(dplyr)
 
+# Creates the directory 'data' if it does not exists and download the required file
 if (!file.exists("data")){
     dir.create("data")
     download.file(
@@ -40,7 +40,6 @@ allset <- allset %>%
     left_join(activities) %>% 
     select(Subject, Activity, contains(".mean."), contains(".std."))
 
-
 # 4. Appropriately labels the data set with descriptive variable names.
 n <- names(allset)
 n <- gsub("\\.mean", "Mean", n)
@@ -61,16 +60,3 @@ avgset <- allset %>%
     summarise_all(funs(mean))
 
 avgset
-
-"abcd" %>% 
-    gsub(pattern="a", replacement = "1") %>% 
-    gsub(pattern="d", replacement = "9")
-
-
-#dim(trainset)
-#dim(testset)
-#trainset[1, ]
-#testset[1, ]
-# quantidade de features = quantidade de campos
-#length(features[,1])
-#length(trainset[1,])
