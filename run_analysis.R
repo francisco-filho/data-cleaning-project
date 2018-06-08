@@ -60,3 +60,5 @@ avgset <- allset %>%
     summarise_all(funs(mean))
 
 avgset
+
+write.table(avgset, "average-set.txt", row.name = F)
