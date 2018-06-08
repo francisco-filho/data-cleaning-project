@@ -23,12 +23,10 @@ subject_test_file   <- "data/UCI HAR Dataset/test/subject_test.txt"
 
 features        <- read.csv(features_file, header=F, stringsAsFactors = F, sep="")
 activities      <- read.csv(activity_label_file, header=F, col.names=c("ActivityCode", "Activity"), sep="")
-
 trainsetX       <- read.csv(train_fileX, header = F, col.names = features[,2], sep="")
 trainsetY       <- read.csv(train_fileY, header = F, col.names = c("ActivityCode"), sep="")
 trainSubject    <- read.csv(subject_train_file, header = F, col.names=c("Subject"))
 trainset        <- bind_cols(trainSubject, trainsetY, trainsetX)
-
 testsetX        <- read.csv(test_fileX, header = F, col.names = features[,2], sep="")
 testsetY        <- read.csv(test_fileY, header = F, col.names= c("ActivityCode"), sep="")
 testSubject     <- read.csv(subject_test_file, header = F, col.names=c("Subject"))
@@ -40,8 +38,7 @@ allset          <- bind_rows(trainset, testset)
 # 3. Uses descriptive activity names to name the activities in the data set
 allset <- allset %>% 
     left_join(activities) %>% 
-    select(Subject, Activity, contains(".mean."), contains(".std.")) %>% 
-    head(100)
+    select(Subject, Activity, contains(".mean."), contains(".std."))
 
 
 # 4. Appropriately labels the data set with descriptive variable names.
@@ -53,6 +50,9 @@ n <- gsub("Gyro", "Gyroscope", n)
 n <- gsub("\\.", "", n)
 names(allset) <- n
 
+# This is the final set
+allset
+
 # 5. From the data set in step 4, creates a second, 
 #    independent tidy data set with the average of each variable 
 #    for each activity and each subject.
@@ -61,6 +61,12 @@ avgset <- allset %>%
     summarise_all(funs(mean))
 
 avgset
+
+"abcd" %>% 
+    gsub(pattern="a", replacement = "1") %>% 
+    gsub(pattern="d", replacement = "9")
+
+
 #dim(trainset)
 #dim(testset)
 #trainset[1, ]
